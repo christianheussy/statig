@@ -341,6 +341,15 @@ where
     }
 }
 
+impl<M> core::ops::DerefMut for InitializedStateMachine<M>
+where
+    M: IntoStateMachine,
+{
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner.shared_storage
+    }
+}
+
 #[cfg(feature = "serde")]
 /// Once an [`InitializedStateMachine`] is serialized, it can only be deserialized into
 /// an [`UnInitializedStateMachine`] which can then be re-initialized with the
@@ -510,6 +519,15 @@ where
 
     fn deref(&self) -> &Self::Target {
         &self.inner.shared_storage
+    }
+}
+
+impl<M> core::ops::DerefMut for UninitializedStateMachine<M>
+where
+    M: IntoStateMachine,
+{
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner.shared_storage
     }
 }
 
